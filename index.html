@@ -52,6 +52,13 @@
             z-index: -1;
         }
 
+        /* Main Container to fix zoom-out stretching */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
         /* Navbar */
         .navbar {
             display: flex;
@@ -110,7 +117,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            height: 80vh;
+            min-height: 80vh;
             position: relative;
         }
 
@@ -118,6 +125,7 @@
             flex: 1;
             z-index: 2;
             animation: fadeIn 1.5s ease-out;
+            max-width: 50%;
         }
 
         .greeting {
@@ -127,16 +135,17 @@
         }
 
         .hero h1 {
-            font-size: 6rem;
+            font-size: clamp(4rem, 6vw, 6rem); /* Responsive typography */
             line-height: 1.1;
             font-weight: 800;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             letter-spacing: -2px;
         }
 
         .hero-stats {
             display: flex;
-            gap: 3rem;
+            flex-wrap: wrap;
+            gap: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
         }
@@ -158,21 +167,30 @@
             color: var(--text-muted);
         }
 
-        /* Hero Image & Integration */
+        /* Hero Image & 3D Integration */
         .hero-image-container {
             flex: 1;
             position: relative;
-            height: 100%;
+            height: 80vh; /* Fixed height to prevent overflow */
             display: flex;
             align-items: flex-end;
             justify-content: flex-end;
+            max-width: 50%;
         }
 
         .hero-model {
-            max-height: 95%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
+            object-position: bottom right;
             z-index: 1;
-            filter: drop-shadow(-15px 15px 25px rgba(0, 0, 0, 0.8));
+            
+            /* 3D Blending effect - fades the bottom into the background */
+            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%);
+            mask-image: linear-gradient(to top, transparent 0%, black 15%);
+            
+            /* Advanced cinematic lighting shadows */
+            filter: drop-shadow(-15px 15px 25px rgba(0, 0, 0, 0.9)) drop-shadow(0px -10px 40px rgba(255, 60, 0, 0.15));
             animation: float 6s ease-in-out infinite;
         }
 
@@ -231,7 +249,7 @@
         }
 
         .footer-ig {
-            font-size: 3rem;
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 800;
             color: var(--text-main);
             text-decoration: none;
@@ -254,7 +272,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.9);
+            background-color: rgba(0,0,0,0.95);
             backdrop-filter: blur(10px);
             justify-content: center;
             align-items: center;
@@ -271,8 +289,8 @@
 
         .close-btn {
             position: absolute;
-            top: 30px;
-            right: 40px;
+            top: 20px;
+            right: 30px;
             color: white;
             font-size: 40px;
             font-weight: bold;
@@ -306,108 +324,105 @@
                 padding-top: 2rem;
             }
             
-            .hero h1 {
-                font-size: 3.5rem;
+            .hero-content {
+                max-width: 100%;
                 margin-bottom: 2rem;
             }
             
             .hero-stats {
                 justify-content: center;
-                flex-wrap: wrap;
-                gap: 1.5rem;
-                padding-top: 1.5rem;
                 border-top: none;
             }
             
             .hero-image-container {
-                margin-top: 3rem;
-                width: 100%;
-                height: 450px;
+                max-width: 100%;
+                height: 50vh; /* Restricts height on mobile so it doesn't take over */
                 justify-content: center;
+                align-items: flex-end;
+            }
+            
+            .hero-model {
+                object-position: bottom center;
             }
             
             .nav-links a:not(.cta-btn) {
                 display: none; 
-            }
-
-            .footer-ig {
-                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cinematic Background Elements -->
     <div class="bg-glow"></div>
     <div class="shape-1"></div>
 
-    <nav class="navbar">
-        <div class="logo">
-            <!-- Minimal abstract logo SVG -->
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>
-        </div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#gallery">Projects</a>
-            <a href="https://instagram.com/Mr.ghosh_200a" target="_blank" class="cta-btn">Get in Touch <span class="arrow">↗</span></a>
-        </div>
-    </nav>
+    <div class="container">
+        
+        <nav class="navbar">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#gallery">Projects</a>
+                <a href="https://instagram.com/Mr.ghosh_200a" target="_blank" class="cta-btn">Get in Touch <span class="arrow">↗</span></a>
+            </div>
+        </nav>
 
-    <header class="hero">
-        <div class="hero-content">
-            <p class="greeting">Hey, I'm a</p>
-            <h1>Thumbnail<br>Designer</h1>
-            
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-num">#01</span>
-                    <span class="stat-label">Product Design</span>
+        <header class="hero">
+            <div class="hero-content">
+                <p class="greeting">Hey, I'm a</p>
+                <h1>Thumbnail<br>Designer</h1>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-num">#01</span>
+                        <span class="stat-label">Product Design</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num">#02</span>
+                        <span class="stat-label">Packaging Design</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num">#03</span>
+                        <span class="stat-label">Photo & Film</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num">#04</span>
+                        <span class="stat-label">Creative Direction</span>
+                    </div>
                 </div>
-                <div class="stat">
-                    <span class="stat-num">#02</span>
-                    <span class="stat-label">Packaging Design</span>
+            </div>
+
+            <div class="hero-image-container">
+                <img src="hero-model.png" alt="Thumbnail Designer" class="hero-model">
+            </div>
+        </header>
+
+        <section id="gallery" class="gallery-section">
+            <div class="gallery-grid">
+                <div class="thumb-card" onclick="openModal('thumb-1.jpg')">
+                    <img src="thumb-1.jpg" alt="Thumbnail Project 1">
                 </div>
-                <div class="stat">
-                    <span class="stat-num">#03</span>
-                    <span class="stat-label">Photo & Film</span>
+                <div class="thumb-card" onclick="openModal('thumb-2.jpg')">
+                    <img src="thumb-2.jpg" alt="Thumbnail Project 2">
                 </div>
-                <div class="stat">
-                    <span class="stat-num">#04</span>
-                    <span class="stat-label">Creative Direction</span>
+                <div class="thumb-card" onclick="openModal('thumb-3.jpg')">
+                    <img src="thumb-3.jpg" alt="Thumbnail Project 3">
+                </div>
+                <div class="thumb-card" onclick="openModal('thumb-4.jpg')">
+                    <img src="thumb-4.jpg" alt="Thumbnail Project 4">
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="hero-image-container">
-            <img src="hero-model.png" alt="Thumbnail Designer" class="hero-model">
-        </div>
-    </header>
+        <footer class="footer">
+            <p>Ready to level up your thumbnails?</p>
+            <a href="https://instagram.com/Mr.ghosh_200a" target="_blank" class="footer-ig">@Mr.ghosh_200a</a>
+        </footer>
 
-    <section id="gallery" class="gallery-section">
-        <div class="gallery-grid">
-            <div class="thumb-card" onclick="openModal('thumb-1.jpg')">
-                <img src="thumb-1.jpg" alt="Thumbnail Project 1">
-            </div>
-            <div class="thumb-card" onclick="openModal('thumb-2.jpg')">
-                <img src="thumb-2.jpg" alt="Thumbnail Project 2">
-            </div>
-            <div class="thumb-card" onclick="openModal('thumb-3.jpg')">
-                <img src="thumb-3.jpg" alt="Thumbnail Project 3">
-            </div>
-            <div class="thumb-card" onclick="openModal('thumb-4.jpg')">
-                <img src="thumb-4.jpg" alt="Thumbnail Project 4">
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- Footer Contact Section -->
-    <footer class="footer">
-        <p>Ready to level up your thumbnails?</p>
-        <a href="https://instagram.com/Mr.ghosh_200a" target="_blank" class="footer-ig">@Mr.ghosh_200a</a>
-    </footer>
-
-    <!-- Fullscreen Modal (Clean, No IG Button) -->
     <div id="modal" class="modal">
         <span class="close-btn" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="modal-img">
